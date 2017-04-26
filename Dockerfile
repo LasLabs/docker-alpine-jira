@@ -64,14 +64,14 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # Metadata
 ARG BUILD_DATE
-    ARG VCS_REF
-    ARG VERSION
-    LABEL org.label-schema.build-date=$BUILD_DATE \
-          org.label-schema.name="JIRA - Alpine" \
-          org.label-schema.description="Provides a Docker image for JIRA on Alpine Linux." \
-          org.label-schema.url="https://laslabs.com/" \
-          org.label-schema.vcs-ref=$VCS_REF \
-          org.label-schema.vcs-url="https://github.com/LasLabs/docker-alpine-jira" \
-          org.label-schema.vendor="LasLabs Inc." \
-          org.label-schema.version=$VERSION \
-          org.label-schema.schema-version="1.0"
+ARG VCS_REF
+ARG VERSION
+LABEL org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.name="JIRA - Alpine" \
+      org.label-schema.description="Provides a Docker image for JIRA on Alpine Linux." \
+      org.label-schema.url="https://laslabs.com/" \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-url="https://github.com/LasLabs/docker-alpine-jira" \
+      org.label-schema.vendor="LasLabs Inc." \
+      org.label-schema.version=$VERSION \
+      org.label-schema.schema-version="1.0"
