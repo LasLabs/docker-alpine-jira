@@ -1,6 +1,9 @@
 [![License: Apache 2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 [![Build Status](https://travis-ci.org/LasLabs/docker-alpine-confluence.svg?branch=master)](https://travis-ci.org/LasLabs/docker-alpine-confluence)
 
+[![](https://images.microbadger.com/badges/image/laslabs/alpine-jira.svg)](https://microbadger.com/images/laslabs/alpine-jira "Get your own image badge on microbadger.com")
+[![](https://images.microbadger.com/badges/version/laslabs/alpine-jira.svg)](https://microbadger.com/images/laslabs/alpine-jira "Get your own version badge on microbadger.com")
+
 Docker Alpine Jira
 ==================
 
