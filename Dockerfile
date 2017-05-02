@@ -1,7 +1,7 @@
 FROM openjdk:8-alpine
 MAINTAINER LasLabs Inc <support@laslabs.com>
 
-ARG JIRA_VERSION=7.3.0
+ARG JIRA_VERSION=7.3.6
 
 ENV JIRA_HOME=/var/atlassian/application-data/jira
 ENV JIRA_INSTALL=/opt/atlassian/jira
