@@ -8,13 +8,18 @@ ARG RUN_USER=jira
 ARG RUN_GROUP=jira
 ARG JIRA_DOWNLOAD_URI=https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-core-${JIRA_VERSION}.tar.gz
 
+ENV LC_ALL=C
+
 # Setup Jira User & Group
 RUN addgroup -S "${RUN_GROUP}" \
     && adduser -S -s /bin/false -G "${RUN_GROUP}" "${RUN_USER}" \
 # Install build deps
     && apk add --no-cache --virtual .build-deps \
+        bash \
         curl \
+        fontconfig \
         tar \
+        ttf-dejavu \
 # Create home, install, and conf dirs
     && mkdir -p "${JIRA_HOME}" \
              "${JIRA_INSTALL}/conf/Catalina" \
@@ -46,8 +51,8 @@ USER "${RUN_USER}":"${RUN_GROUP}"
 # Expose ports
 EXPOSE 8080
 
-# Persist both the install and home dirs
-VOLUME ["${JIRA_INSTALL}", "${JIRA_HOME}"]
+# Persist the install and home dirs + JRE security folder (cacerts)
+VOLUME ["${JIRA_INSTALL}", "${JIRA_HOME}", "${JAVA_HOME}/jre/lib/security/"]
 
 # Set working directory to install directory
 WORKDIR "${JIRA_INSTALL}"
