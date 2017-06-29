@@ -2,14 +2,11 @@ FROM openjdk:8-alpine
 MAINTAINER LasLabs Inc <support@laslabs.com>
 
 ARG JIRA_VERSION=7.3.0
-
-ENV JIRA_HOME=/var/atlassian/application-data/jira
-ENV JIRA_INSTALL=/opt/atlassian/jira
-
-ENV JIRA_DOWNLOAD_URI=https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-core-${JIRA_VERSION}.tar.gz
-
-ENV RUN_USER=jira
-ENV RUN_GROUP=jira
+ARG JIRA_HOME=/var/atlassian/application-data/jira
+ARG JIRA_INSTALL=/opt/atlassian/jira
+ARG RUN_USER=jira
+ARG RUN_GROUP=jira
+ARG JIRA_DOWNLOAD_URI=https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-core-${JIRA_VERSION}.tar.gz
 
 # Setup Jira User & Group
 RUN addgroup -S "${RUN_GROUP}" \
