@@ -17,7 +17,7 @@ env:
   matrix:
     - TESTS="1"
     - LINT_CHECK="1"
-    - HUB="1" BUILD_ARGS="JIRA_VERSION=7.3.6" DOCKER_TAG="7.3.6"
+    - HUB="1" BUILD_ARGS="JIRA_VERSION=7.3.8" DOCKER_TAG="7.3.8"
 
 install:
   - git clone --depth=1 https://github.com/LasLabs/docker-quality-tools.git ${HOME}/docker-quality-tools
