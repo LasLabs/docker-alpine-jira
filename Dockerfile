@@ -15,10 +15,12 @@ RUN addgroup -S "${RUN_GROUP}" \
     && adduser -S -s /bin/false -G "${RUN_GROUP}" "${RUN_USER}" \
 # Install build deps
     && apk add --no-cache --virtual .build-deps \
-        bash \
         curl \
-        fontconfig \
         tar \
+# Install required binaries
+    && apk add --no-cache \
+        bash \
+        fontconfig \
         ttf-dejavu \
 # Create home, install, and conf dirs
     && mkdir -p "${JIRA_HOME}" \
