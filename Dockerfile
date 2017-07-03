@@ -7,6 +7,7 @@ ARG JIRA_INSTALL=/opt/atlassian/jira
 ARG RUN_USER=jira
 ARG RUN_GROUP=jira
 ARG JIRA_DOWNLOAD_URI=https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-core-${JIRA_VERSION}.tar.gz
+ARG POSTGRES_DRIVER_VERSION=42.1.1
 
 ENV LC_ALL=C
 
@@ -29,6 +30,10 @@ RUN addgroup -S "${RUN_GROUP}" \
     && curl -Ls "${JIRA_DOWNLOAD_URI}" \
         | tar -xz --directory "${JIRA_INSTALL}" \
             --strip-components=1 --no-same-owner \
+# Update the Postgres library to allow non-archaic Postgres versions
+    && cd "${JIRA_INSTALL}/lib" \
+    && rm -f "${JIRA_INSTALL}/lib/postgresql-9.*.jdbc4-atlassian-hosted.jar" \
+    && curl -O "https://jdbc.postgresql.org/download/postgresql-${POSTGRES_DRIVER_VERSION}.jar" \
 # Setup permissions
     && chmod -R 700 "${JIRA_HOME}" \
                     "${JIRA_INSTALL}/conf" \
