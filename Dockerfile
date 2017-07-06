@@ -1,8 +1,8 @@
 FROM openjdk:8u121-alpine
 MAINTAINER LasLabs Inc <support@laslabs.com>
 
-ARG JIRA_VERSION=7.3.8
-ARG JIRA_HOME=/var/atlassian/application-data/jira
+ARG JIRA_VERSION=7.4.0
+ARG JIRA_HOME=/var/atlassian/jira
 ARG JIRA_INSTALL=/opt/atlassian/jira
 ARG RUN_USER=jira
 ARG RUN_GROUP=jira
@@ -25,6 +25,7 @@ RUN addgroup -S "${RUN_GROUP}" \
         ttf-dejavu \
 # Create home, install, and conf dirs
     && mkdir -p "${JIRA_HOME}" \
+            "${JIRA_HOME}/caches/index" \
              "${JIRA_INSTALL}/conf/Catalina" \
 # Download assets and extract to appropriate locations
     && curl -Ls "${JIRA_DOWNLOAD_URI}" \
@@ -32,8 +33,11 @@ RUN addgroup -S "${RUN_GROUP}" \
             --strip-components=1 --no-same-owner \
 # Update the Postgres library to allow non-archaic Postgres versions
     && cd "${JIRA_INSTALL}/lib" \
-    && rm -f "${JIRA_INSTALL}/lib/postgresql-9.*.jdbc4-atlassian-hosted.jar" \
-    && curl -O "https://jdbc.postgresql.org/download/postgresql-${POSTGRES_DRIVER_VERSION}.jar" \
+    && rm -f "${JIRA_INSTALL}/lib/postgresql-9.1-903.jdbc4-atlassian-hosted.jar" \
+    && curl -Os "https://jdbc.postgresql.org/download/postgresql-${POSTGRES_DRIVER_VERSION}.jar" \
+# Add MySQL driver
+    && curl -Ls "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.38.tar.gz" \
+       | tar -xz --directory "${JIRA_INSTALL}/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.38/mysql-connector-java-5.1.38-bin.jar" \
 # Setup permissions
     && chmod -R 700 "${JIRA_HOME}" \
                     "${JIRA_INSTALL}/conf" \
@@ -58,8 +62,8 @@ USER "${RUN_USER}":"${RUN_GROUP}"
 # Expose ports
 EXPOSE 8080
 
-# Persist the install and home dirs + JRE security folder (cacerts)
-VOLUME ["${JIRA_INSTALL}", "${JIRA_HOME}", "${JAVA_HOME}/jre/lib/security/"]
+# Persist the log and home dirs + JRE security folder (cacerts)
+VOLUME ["${JIRA_INSTALL}/logs", "${JIRA_HOME}", "${JAVA_HOME}/jre/lib/security/"]
 
 # Set working directory to install directory
 WORKDIR "${JIRA_INSTALL}"
