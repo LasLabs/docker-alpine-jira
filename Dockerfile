@@ -63,7 +63,7 @@ USER "${RUN_USER}":"${RUN_GROUP}"
 EXPOSE 8080
 
 # Persist the log and home dirs + JRE security folder (cacerts)
-VOLUME ["${JIRA_INSTALL}/logs", "${JIRA_HOME}", "${JAVA_HOME}/jre/lib/security/"]
+VOLUME ["${JIRA_INSTALL}/logs", "${JIRA_INSTALL}/conf", "${JIRA_HOME}", "${JAVA_HOME}/jre/lib/security/"]
 
 # Set working directory to install directory
 WORKDIR "${JIRA_INSTALL}"
