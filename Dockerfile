@@ -1,4 +1,4 @@
-FROM openjdk:8-alpine
+FROM openjdk:8u121-alpine
 MAINTAINER LasLabs Inc <support@laslabs.com>
 
 ARG JIRA_VERSION=7.3.8
