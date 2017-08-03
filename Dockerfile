@@ -1,7 +1,7 @@
 FROM openjdk:8u121-alpine
 MAINTAINER LasLabs Inc <support@laslabs.com>
 
-ARG JIRA_VERSION=7.4.1
+ARG JIRA_VERSION=7.4.2
 ARG JIRA_HOME=/var/atlassian/jira
 ARG JIRA_INSTALL=/opt/atlassian/jira
 ARG RUN_USER=jira
