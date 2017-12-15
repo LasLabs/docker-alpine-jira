@@ -8,7 +8,7 @@ services:
 env:
   global:
     - PORTS="8080:8080"
-    - LINT_IGNORE="SC2086,DL3000"
+    - LINT_IGNORE="DL3000,DL3003,SC2086"
 
   matrix:
     - TESTS="1"
