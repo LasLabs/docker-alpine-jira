@@ -6,7 +6,8 @@ ARG JIRA_INSTALL=/opt/atlassian/jira
 ARG RUN_USER=jira
 ARG RUN_GROUP=jira
 ARG JIRA_DOWNLOAD_URI=https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-core-${JIRA_VERSION}.tar.gz
-ARG POSTGRES_DRIVER_VERSION=42.1.1
+ARG POSTGRES_DRIVER_VERSION=42.1.4
+ARG MYSQL_DRIVER_VERSION=5.1.45
 
 ENV LC_ALL=C
 
@@ -25,7 +26,7 @@ RUN apk add --no-cache --virtual .build-deps \
         fontconfig \
         ttf-dejavu
 # JIRA install/setup. Order of operations:
-# 1. Confluence assets + install
+# 1. JIRA assets + install
 # 2. Postgres Driver
 # 3. MySQL Driver
 # 4. Permissions
@@ -34,10 +35,12 @@ RUN curl -Ls "${JIRA_DOWNLOAD_URI}" \
         | tar -xz --directory "${JIRA_INSTALL}" \
             --strip-components=1 --no-same-owner \
     && cd "${JIRA_INSTALL}/lib" \
-    && rm -f "${JIRA_INSTALL}/lib/postgresql-9.1-903.jdbc4-atlassian-hosted.jar" \
+    && rm -f "${JIRA_INSTALL}/lib/postgresql-9.*" \
     && curl -Os "https://jdbc.postgresql.org/download/postgresql-${POSTGRES_DRIVER_VERSION}.jar" \
-    && curl -Ls "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.38.tar.gz" \
-       | tar -xz --directory "${JIRA_INSTALL}/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.38/mysql-connector-java-5.1.38-bin.jar" \
+    && curl -Ls "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz" \
+        | tar -xz --directory "${JIRA_INSTALL}/lib" \
+            --strip-components=1 --no-same-owner \
+            "mysql-connector-java-${MYSQL_DRIVER_VERSION}/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar" \
     && chmod -R 700 "${JIRA_HOME}" \
                     "${JIRA_INSTALL}/conf" \
                     "${JIRA_INSTALL}/temp" \
