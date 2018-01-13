@@ -9,7 +9,9 @@ ARG JIRA_DOWNLOAD_URI=https://www.atlassian.com/software/jira/downloads/binary/a
 ARG POSTGRES_DRIVER_VERSION=42.1.4
 ARG MYSQL_DRIVER_VERSION=5.1.45
 
-ENV LC_ALL=C
+ENV LC_ALL=C \
+    JIRA_HOME=$JIRA_HOME \
+    JIRA_INSTALL=$JIRA_INSTALL
 
 # Setup Confluence User & Group + directories
 RUN addgroup -S "${RUN_GROUP}" \
@@ -74,6 +76,7 @@ CMD ["./bin/catalina.sh", "run"]
 
 # Copy & set entrypoint for manual access
 COPY ./docker-entrypoint.sh /
+COPY ./entrypoint.d/ /entrypoint.d/
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # Metadata
