@@ -9,6 +9,7 @@ env:
   global:
     - PORTS="8080:8080"
     - LINT_IGNORE="DL3000,DL3003,SC2086"
+    - RUN_ENV="PROXY_NAME=www.example.com"
 
   matrix:
     - TESTS="1"

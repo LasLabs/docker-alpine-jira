@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+# Setup the Tomcat server for a proxy if defined.
+
+if [ -n "${PROXY_NAME}" ]; then
+    echo "Writing proxy settings to Tomcat connector settings"
+    PROXY_PORT="${PROXY_PORT:=443}"
+    PROXY_SCHEME="${PROXY_SCHEME:=https}"
+    sed -i \
+        "s/<Connector port=\"8080\"/<Connector port=\"8080\" proxyName=\"${PROXY_NAME}\" proxyPort=\"${PROXY_PORT}\" scheme=\"${PROXY_SCHEME}\"/" \
+        "${JIRA_INSTALL}/conf/server.xml"
+fi

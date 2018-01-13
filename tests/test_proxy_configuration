@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+# Copyright 2016 LasLabs Inc.
+# License Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.html).
+
+# This script will test that $FILE_PATH exists on the server.
+
+set -e
+
+FILE_PATH="/opt/atlassian/jira/conf/server.xml"
+LOOK_FOR="proxyName=\"www.example.com\" proxyPort=\"443\" scheme=\"https\""
+
+OUTPUT=`docker exec -i -t $DOCKER_CONTAINER_ID grep "${LOOK_FOR}" "${FILE_PATH}"`
+
+# Have to grep again because of script output being caught.
+echo $OUTPUT | grep -q "${LOOK_FOR}"
+
+echo "The proxy configuration was properly set."

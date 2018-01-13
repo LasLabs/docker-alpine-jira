@@ -37,7 +37,9 @@ pleasure:
 
 | Name | Default | Description |
 |------|---------|-------------|
-
+| `PROXY_NAME` |  | Enable proxy mode and define the domain that is being served on (``www.example.com``). |
+| `PROXY_PORT` | 443 | If proxy mode is enabled, this is the port that the proxy is serving on. |
+| `PROXY_SCHEME` | https | If proxy mode is enabled, this is the scheme the proxy is serving on (``http`` or ``https`` typically). |
 
 Known Issues / Roadmap
 ======================
