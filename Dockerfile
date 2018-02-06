@@ -1,6 +1,6 @@
 FROM openjdk:8u121-alpine
 
-ARG JIRA_VERSION=7.7.0
+ARG JIRA_VERSION=7.7.1
 ARG JIRA_HOME=/var/atlassian/jira
 ARG JIRA_INSTALL=/opt/atlassian/jira
 ARG RUN_USER=jira
